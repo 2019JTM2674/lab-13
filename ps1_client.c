@@ -3,7 +3,8 @@
 #include <sys/socket.h> 
 #include <arpa/inet.h> 
 #include <unistd.h> 
-#include <string.h> 
+#include <string.h>
+#include <stdlib.h>  
 #define PORT 8080 
 
 int main(int argc, char const *argv[]) 
@@ -58,17 +59,26 @@ int main(int argc, char const *argv[])
         goto start;
     }
 	printf("Type Exit to exit chat\n");
-	printf("Client");
     while(1){
-        printf("client\n");
         fgets (buffer, 1023, stdin);
         send(sock , buffer , strlen(buffer) , 0 );
-		
-		printf("%s",buffer); 
-		strcpy(option,buffer);
-        if(strcmp(buffer,"exit")==0)
+		printf("Press Y else continue\n");
+		//fgets (buffer, 1023, stdin);
+        int z = strcmp(buffer,"Y");
+		if(z==10){
+			printf("Enetr Mobile");
+			fgets (buffer, 1023, stdin);
+        	send(sock , buffer , strlen(buffer) , 0 );
+			exit(0);
 			break;
-		bzero(buffer,sizeof(buffer));
+		}
+		else
+		{
+			bzero(buffer,sizeof(buffer));
+			continue;
+		}
+		
+		
     }
 	printf("%s",data);
     

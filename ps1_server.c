@@ -52,14 +52,11 @@ int main(int argc, char const *argv[])
 		perror("accept"); 
 		exit(EXIT_FAILURE); 
 	} 
-	// valread = read( new_socket , buffer, 1024); 
-	// printf("%s\n",buffer ); 
-	// send(new_socket , hello , strlen(hello) , 0 ); 
-	// printf("Hello message sent\n"); 
+
 
 
     char user[30], pass[30],data[1024],option[30]={0};
-    char f_user[30], f_pass[30],f_mob[30];
+    char f_user[30], f_pass[30],f_mob[30],mobile_no[20];
     char message[30]="Valid User",invalid[30]="Invalid User";
     FILE *fp;
     int valid=0;
@@ -101,10 +98,14 @@ int main(int argc, char const *argv[])
 
     while(1){
         serverReceive = read( new_socket , buffer, 1024);
-        printf("%s",buffer);
-        if(strcmp(buffer,"exit")==0)
-            break;
-        bzero(buffer,sizeof(buffer)); 
+        //printf("%s",buffer);
+        int z = strcmp(buffer,"Y");
+		if(z==10){
+        	serverReceive = read( new_socket , buffer, 1024);
+            strcpy(mobile_no,buffer);
+            printf("%s",mobile_no);
+			break;
+		} 
     }
     // serverReceive = read( new_socket , buffer, 1024); 
     // printf("%s",buffer);

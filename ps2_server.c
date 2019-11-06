@@ -5,6 +5,11 @@
 #include <stdlib.h> 
 #include <netinet/in.h> 
 #include <string.h> 
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <netdb.h> 
+#include<ctype.h>
+#include<stdlib.h>
 #define PORT 6001 
 void delay() 		//Delay function to avoid overlapping of data
 {
