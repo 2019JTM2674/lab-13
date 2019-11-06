@@ -1,1 +1,6 @@
-Prerna Singh 92 95 83 NIL
+FirstName: Prerna 
+LastName: Singh
+10thPercentage: 92
+12thPercentage: 95
+GraduationPercentage: 83
+WorkExperiance: NIL

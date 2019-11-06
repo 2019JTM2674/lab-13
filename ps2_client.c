@@ -8,8 +8,9 @@
 #include <netinet/in.h>
 #include <netdb.h> 
 #include<ctype.h>
+#include<stdlib.h>
 
-#define PORT 8080 
+#define PORT 6001
 
 int main(int argc, char const *argv[]) 
 { 
@@ -44,7 +45,10 @@ int main(int argc, char const *argv[])
     scanf("%s",file_name);
     FILE *fp = fopen(file_name,"r+");
     char ch;
-
+    float norm;
+    char first_name[50],last_name[50];
+    char f[50],l[50],j[20];
+    int p;
     if(fp == NULL){
         perror("Error opening file");
     }
@@ -54,6 +58,24 @@ int main(int argc, char const *argv[])
         write(sock,buffer,1024);
         ch = fgetc(fp);
     }
-    printf("The file was sent successfully");
+    printf("The file was sent successfully\n");
+    bzero(buffer,sizeof(buffer));
+    fseek(fp,0,SEEK_SET);
+
+    while(fscanf ( fp, "%s %s",f,l) != EOF){
+        if(strcmp(f,"FirstName:")==0){
+            strcpy(first_name,l);
+        }
+        if(strcmp(f,"LastName:")==0){
+            strcpy(last_name,l);
+        }
+    }
+    fclose(fp);
+    //read(sock,&norm,sizeof(float));
+    //p = read(sock , buffer, 1024);
+    printf("%s",buffer);
+    bzero(buffer,sizeof(buffer));
+    //p = read(sock , buffer, 1024);
+    printf("Hey %s %s, your normalised score is %s\n",first_name,last_name,buffer);
 	return 0; 
 } 

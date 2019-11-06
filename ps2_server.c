@@ -5,7 +5,16 @@
 #include <stdlib.h> 
 #include <netinet/in.h> 
 #include <string.h> 
-#define PORT 8080 
+#define PORT 6001 
+void delay() 		//Delay function to avoid overlapping of data
+{
+   int c, d;
+   
+   for (c = 1; c <= 32767; c++)
+       for (d = 1; d <= 32767; d++)
+       {}
+       
+}
 int main(int argc, char const *argv[]) 
 { 
 	int server_fd, new_socket, valread; 
@@ -14,7 +23,7 @@ int main(int argc, char const *argv[])
 	int addrlen = sizeof(address); 
 	char buffer[1024] = {0}; 
 	char *hello = "Hello from server"; 
-	
+	char k[10]="user";
 	// Creating socket file descriptor 
 	if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) 
 	{ 
@@ -52,13 +61,18 @@ int main(int argc, char const *argv[])
 		exit(EXIT_FAILURE); 
 	}
 
+    
     FILE *fp;
     char ch;
+    char m[30];
     char first_name[50],last_name[50],ten[20],inter[20],grad[20],work_exp[20];
+    char s_first[50],s_last[50];
+    char f[20],l[20],t[20],i[20],g[20],w[20];
     int ten_p,inter_p,grad_p;
     float work;
     int bi;
-    float a,b,c,d,norm_score=0;
+    
+    float a,b,c,d,norm_score=0,s_norm;
     fp = fopen("new_file.txt","w+");
     if ( fp == NULL )
 		{
@@ -68,16 +82,16 @@ int main(int argc, char const *argv[])
     while((bi=recv(new_socket,buffer,1024,0))>0){
         //read(new_socket,buffer,1024);
         fprintf(fp,"%s\t",buffer);
+        
         // ch=fgetc(fp);
     }
-
+    
     fseek(fp,0,SEEK_SET);
-
-    while(fscanf ( fp, "%s %s %s %s %s %s",  first_name,last_name,ten,inter,grad,work_exp) != EOF){
+    //send(new_socket , k , strlen(k) , 0 ); 
+    while(fscanf ( fp, "%s %s %s %s %s %s %s %s %s %s %s %s",  f,first_name,l,last_name,t,ten,i,inter,g,grad,w,work_exp) != EOF){
         ten_p = atoi(ten);
         inter_p=atoi(inter);
         grad_p=atoi(grad);
-        
         if(ten_p>90)
             a=10;
         else if(ten_p>80 && ten_p<=90)
@@ -138,9 +152,18 @@ int main(int argc, char const *argv[])
         }
         // printf("%f\t%f\t%f\t%f",a,b,c,d);
         norm_score = (a+b+c+d)/33;
+        
+        s_norm=norm_score;
+        sprintf(buffer,"%f",s_norm);
+        //printf("str %s",buffer);
+        //send(new_socket , buffer , strlen(buffer) , 0 ); 
         printf("Hey %s %s, your normalised score is %f\n",first_name,last_name,norm_score);
+     
+        
     }
-
-    
+    fclose(fp);
+    // sprintf(buffer,"%f",s_norm);
+    // printf("str %s",buffer);
+    // send(new_socket , buffer , strlen(buffer) , 0 ); 
 	return 0; 
 } 
